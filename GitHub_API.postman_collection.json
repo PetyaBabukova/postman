@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "2ca8086a-8b3b-4922-948b-abb6824733c8",
+		"name": "GitHub_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25580258"
+	},
+	"item": [
+		{
+			"name": "ISSUES",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "single issue",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Check status code\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/petyababukova/postman/issues/1",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"petyababukova",
+										"postman",
+										"issues",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all issues",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"check if response is an array of issues\", ()=>{\r",
+											"    const body = pm.response.json();\r",
+											"    console.log(\"BODY\", body);\r",
+											"\r",
+											"    for (let item of body){\r",
+											"        pm.expect(typeof(item.title)).equals(\"string\")\r",
+											"        pm.expect(typeof(item.number)).equals(\"number\")\r",
+											"        pm.expect(typeof(item.number)).is.greaterThan(0)\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/petyababukova/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"petyababukova",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "create new issue",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Check issue number\", function(){\r",
+											"    let body = pm.response.json();\r",
+											"    pm.expect(body.number, \"Number property\").greaterThan(0);\r",
+											"    pm.expect(body.title, \"Title property\").equal(\"Issue form Postman with test\");\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "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",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "petyababukova",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Issue form Postman with test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.github.com/repos/petyababukova/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"petyababukova",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create invlid issue",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "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",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "petyababukova",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\" : \"issue fifth\"\r\n    \r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.github.com/repos/petyababukova/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"petyababukova",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Repos",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "get all repos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/users/petyababukova/repos",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"users",
+										"petyababukova",
+										"repos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get single issue_labels",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Statis code is 200 second example\", function(){\r",
+											"    pm.expect(pm.response.code).equals(200)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Statis check\", function(){\r",
+											"    console.log(\"RESPONSE:\", pm.response)\r",
+											"    pm.expect(pm.response.status).equals(\"OK\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/petyababukova/postman/issues/1/labels",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"petyababukova",
+										"postman",
+										"issues",
+										"1",
+										"labels"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "create issue with labels",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "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",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "petyababukova",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"title\":\"Issue with labels\",\r\n   \"labels\":[\r\n      \"bug\",\r\n      \"prioriy: cretical\",\r\n      \"my label\"\r\n   ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.github.com/repos/petyababukova/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"petyababukova",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
